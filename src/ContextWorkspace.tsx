@@ -219,5 +219,3 @@ export default function ContextWorkspace({ onOpenReview }: { onOpenReview: () =>
     </main>
   </div>;
 }
-
-
