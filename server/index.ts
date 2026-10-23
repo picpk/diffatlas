@@ -20,7 +20,7 @@ app.use(staticError);
 const server = app.listen(port, host, () => {
   console.log(`DiffAtlas is listening at http://${host}:${port}`);
   if (!process.env.OPENAI_API_KEY?.trim() || !process.env.REVIEW_ACCESS_TOKEN?.trim()) {
-    console.log('Offline demo mode: configure OPENAI_API_KEY and REVIEW_ACCESS_TOKEN to enable AI review.');
+    console.log('Context packing is ready without an API key. Configure OPENAI_API_KEY and REVIEW_ACCESS_TOKEN only to enable optional AI diff review.');
   }
 });
 for (const signal of ['SIGINT', 'SIGTERM'] as const) {

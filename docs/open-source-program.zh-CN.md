@@ -59,10 +59,10 @@ DiffAtlas 是独立开源项目。本仓库不声称获得 OpenAI 认可、资�
 先让工具解决真实问题，再根据实际进展决定申请时机：
 
 1. 发布可运行版本：README、MIT 许可证、演示、安装步骤、测试和贡献入口应可用。
-2. 验证实际价值：用有权限使用的 diff 测试，并记录误报、漏报和证据校验失败案例。
+2. 验证实际价值：用有权限使用的代码任务比较完整上下文与筛选后上下文，记录 token、必要证据遗漏和实际任务完成情况。合成基准的省量不等于模型质量提升。
 3. 持续维护：处理真实 issues、评审贡献、记录发布变化。不要为申请伪造活动。
 4. 收集可核实的使用证据：采用者自愿公开的反馈、包下载、真实 stars 或集成。没有的数据不填。
-5. 提出具体支持用途：例如真实 PR 的审查辅助、评估集建设、发布前回归验证，说明可交付成果及成本估算依据。
+5. 提出具体支持用途：例如上下文筛选的模型效果评估、独立任务集建设、发布前回归验证，说明可交付成果及成本估算依据。
 
 ## 可改写的申请草稿
 
@@ -70,10 +70,10 @@ DiffAtlas 是独立开源项目。本仓库不声称获得 OpenAI 认可、资�
 
 **为什么项目符合要求：**
 
-> DiffAtlas is an early open-source tool for reviewing Git diffs. It checks finding locations and quoted evidence against the supplied patch and exports review reports for developer workflows. I maintain the implementation, tests, documentation, and releases. Current adoption: [insert only verified metrics or explain a concrete ecosystem need].
+> DiffAtlas Context is an early open-source tool that packs code context within a token budget, locally and without model calls. It preserves complete JS/TS declarations, reports omissions, and provides reproducible evidence-retention benchmarks. I maintain its code, tests, docs, and releases. Current adoption: [insert only verified metrics or explain a concrete ecosystem need].
 
 **API 额度用途：**
 
-> We would use API credits to evaluate evidence-backed reviews on authorized, non-sensitive patches, investigate false positives, and improve maintainer review workflows. We would document the evaluation method and publish reproducible examples. Requested scope and usage estimates: [fill in an actual plan and measured estimate].
+> We would use API credits to compare full and packed context on authorized coding tasks, measuring executable task success and input/output token usage under fixed model settings. We would publish the method and reproducible results, including failures. Requested scope and usage estimates: [fill in an actual plan and measured estimate].
 
 草稿中的计划应与实际能完成的工作一致。提交申请意味着接受项目条款；由申请人核对身份、数据和条款后决定是否提交。

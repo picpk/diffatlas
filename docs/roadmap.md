@@ -1,24 +1,31 @@
 # Roadmap
 
-DiffAtlas is an early project. This document lists potential next steps, not shipped features or delivery commitments. Priorities should follow reproducible issues and feedback from people using the tool.
+DiffAtlas Context focuses on smaller, inspectable coding inputs. These are possible next steps, not shipped features or delivery commitments. Priorities should follow reproducible failures on real tasks.
 
-## Review quality
+## Evidence before stronger claims
 
-- Build a small, versioned evaluation set of authorized or synthetic diffs with human-reviewed expectations.
-- Measure false positives, missed findings, and rejected evidence separately.
-- Improve handling of unusual patch formats, renames, and truncated context.
-- Make limitations caused by missing repository context easier to understand.
+- Add independently annotated tasks from public repositories, with provenance and fixed revisions.
+- Compare with path search, keyword retrieval, and manual context selection under equal budgets.
+- Run opt-in model evaluations with fixed models and executable success criteria. Report quality regressions alongside input/output token usage.
+- Keep synthetic selection results separate from real-task and model-quality results.
 
-## Maintainer workflows
+## Context selection
 
-- Explore an opt-in GitHub Action that uploads reports without automatically posting comments.
-- Compare reviews between revisions and track whether a finding still applies.
-- Document examples of integrating SARIF with existing review tools.
+- Improve discovery of callers, tests, configuration, and dependencies without unbounded expansion.
+- Add complete-unit parsing for more languages based on real requests.
+- Resolve project aliases and workspace packages with explicit reports.
+- Improve Unicode task matching and show weak lexical signals clearly.
+- Make manual inclusion and before/after context inspection easier.
 
-## Deployment and usability
+## Developer workflows
 
-- Add deployment recipes in response to tested community setups.
-- Improve keyboard navigation, screen-reader behavior, and internationalization.
-- Evaluate additional model configurations with documented compatibility and measured results.
+- Add measured integrations for local model clients and editor assistants.
+- Explore incremental context to avoid resending unchanged code.
+- Add an opt-in CI check for context budgets and evidence-retention regressions.
+- Keep credentials and billing out of the default packing workflow.
 
-Propose a concrete use case in an issue before beginning a large feature. Do not include private code or credentials.
+## Existing review tools
+
+Maintain the earlier diff review CLI and API for compatibility. Evidence validation remains useful, but review quality requires separate evaluation. New review features should have a demonstrated user need.
+
+Propose a concrete use case and a small reproducible example before starting a large feature. See [the contribution guide](../CONTRIBUTING.md).

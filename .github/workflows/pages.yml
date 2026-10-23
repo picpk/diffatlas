@@ -1,4 +1,4 @@
-name: Deploy demo to GitHub Pages
+name: Deploy local tools to GitHub Pages
 
 on:
   push:
@@ -29,7 +29,7 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
       - run: npm ci
-      - name: Build static demo
+      - name: Build local context app
         run: npm run build:web
         env:
           BASE_PATH: ${{ steps.pages.outputs.base_path }}/
@@ -48,6 +48,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy static demo
+      - name: Deploy local context app
         id: deployment
         uses: actions/deploy-pages@v4

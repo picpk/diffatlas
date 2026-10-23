@@ -1,0 +1,162 @@
+.context-app { --context-navy: #173653; --context-blue: #315df4; --context-green: #258971; --context-muted: #75879a; --context-border: #dfe7ef; min-height: 100vh; background: #f5f8fc; color: var(--context-navy); }
+.context-topbar { min-height: 74px; display: flex; align-items: center; gap: 42px; padding: 0 38px; background: #fff; border-bottom: 1px solid var(--context-border); }
+.context-brand { display: inline-flex; gap: 11px; align-items: center; }
+.context-brand-mark { display: grid; place-items: center; width: 37px; height: 37px; background: #173653; color: white; border-radius: 9px; }
+.context-brand strong { font-size: 21px; letter-spacing: -.65px; font-weight: 700; }
+.context-brand strong > span { font-weight: 400; margin-left: 7px; color: #7b8da2; }
+.context-brand > small { font-family: var(--mono); font-size: 9px; border: 1px solid #dfe7ef; padding: 3px 5px; border-radius: 4px; color: #6e8195; margin-left: 1px; }
+.context-topnav { align-self: stretch; display: flex; align-items: stretch; gap: 24px; font-size: 12px; }
+.context-topnav > span, .context-topnav > button { display: inline-flex; align-items: center; gap: 6px; padding: 3px 1px 0; }
+.context-topnav-active { color: #315df4; border-bottom: 2px solid #315df4; }
+.context-topnav > button { color: #75879a; }
+.context-topnav > button:hover { color: #315df4; }
+.context-github { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.context-mit { font-size: 9px; padding: 3px 5px; border-radius: 4px; background: #f1f5f9; color: #76899c; margin-left: 4px; }
+.context-main { max-width: 1540px; margin: 0 auto; padding: 32px 38px 0; }
+.context-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin: 0 0 27px; }
+.context-eyebrow { display: flex; gap: 7px; align-items: center; font: 10px var(--mono); letter-spacing: 1.4px; color: #7d91a5; margin-bottom: 13px; }
+.context-eyebrow > span { width: 5px; height: 5px; background: #3c997f; border-radius: 50%; }
+.context-heading h1 { font-size: clamp(23px, 2.2vw, 30px); font-weight: 650; letter-spacing: -.7px; line-height: 1.5; }
+.context-heading h1 > span { color: #315df4; }
+.context-heading p { margin: 10px 0 0; color: #74869b; font-size: 12px; line-height: 1.8; }
+.context-mobile-break { display: none; }
+.context-local { display: flex; align-items: center; gap: 11px; background: #ecf5f2; color: #478b77; padding: 11px 14px; border: 1px solid #deeee8; border-radius: 7px; flex-shrink: 0; margin-bottom: 3px; }
+.context-local > div { display: grid; gap: 5px; }
+.context-local strong { font-size: 11px; font-weight: 550; }
+.context-local span { font-size: 10px; color: #7a9b8f; }
+.context-grid { display: grid; grid-template-columns: 326px minmax(0, 1fr); gap: 23px; align-items: start; }
+.context-controls { display: grid; gap: 14px; }
+.context-panel { background: #fff; border: 1px solid var(--context-border); border-radius: 9px; padding: 19px; }
+.context-panel-label { display: flex; align-items: center; gap: 8px; margin-bottom: 19px; }
+.context-panel-label h2 { margin: 0; font-size: 12px; font-weight: 650; }
+.context-panel-label > svg, .context-panel-label > .context-count { margin-left: auto; color: #8da1b4; }
+.context-step { color: #7d95ae; font: 10px var(--mono); margin-right: 1px; }
+.context-field-label { display: block; font-size: 11px; color: #6e8299; margin-bottom: 9px; }
+.context-task-input { display: block; width: 100%; height: 126px; resize: vertical; min-height: 90px; max-height: 340px; border: 1px solid #dce5f0; background: #fafcfe; border-radius: 6px; padding: 11px 12px; font-size: 12px; line-height: 1.9; color: #425d79; }
+.context-task-input:focus { border-color: #88a1ef; }
+.context-help { font-size: 10px; color: #8899aa; line-height: 1.8; margin: 10px 0 0; }
+.context-center { text-align: center; margin-top: 9px; }
+.context-budget-value { display: flex; align-items: center; justify-content: space-between; }
+.context-budget-value > label { font-size: 11px; color: #70849b; }
+.context-budget-value > div { display: flex; align-items: center; gap: 6px; }
+.context-budget-value input { font-family: var(--mono); font-size: 19px; font-weight: 600; width: 94px; color: #2c4a6a; padding: 6px 5px; text-align: right; border: 1px solid #e1e8f1; border-radius: 5px; background: #fafcfe; }
+.context-budget-value > div > span { font-size: 10px; color: #8a9caf; }
+.context-range { display: block; accent-color: #4166ed; width: 100%; margin: 17px 0 7px; height: 5px; cursor: pointer; }
+.context-range-labels { display: flex; justify-content: space-between; color: #8a9caf; font: 9px var(--mono); }
+.context-encoding { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: #71869d; margin: 19px 0; padding-top: 14px; border-top: 1px solid #eef2f7; }
+.context-encoding select { max-width: 160px; color: #617a96; font: 10px var(--mono); padding: 6px 7px; border: 1px solid #dde5f0; background: #fff; border-radius: 4px; }
+.context-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 34px; padding: 8px 11px; font-size: 11px; font-weight: 550; border-radius: 6px; white-space: nowrap; }
+.context-primary { background: #315df4; color: #fff; box-shadow: 0 2px 3px #315df418; }
+.context-primary:hover:not(:disabled) { background: #234fdf; }
+.context-secondary { border: 1px solid #dce5ef; background: #fff; color: #617a93; }
+.context-secondary:hover:not(:disabled) { border-color: #a9bdd7; background: #f9fbff; }
+.context-generate { width: 100%; padding: 12px; }
+.context-generate > svg:last-child { margin-left: auto; }
+.context-count { font-size: 9px; color: #7f94aa; background: #eff4f9; padding: 3px 6px; border-radius: 4px; font-weight: 400; }
+.context-import-actions { display: flex; gap: 8px; }
+.context-import-actions > button { flex: 1; padding-inline: 7px; }
+.context-import-notice { color: #687e97; background: #f2f6fc; padding: 8px; border-radius: 5px; font-size: 10px; line-height: 1.7; overflow-wrap: anywhere; }
+.context-file-list { margin: 14px -10px 0; max-height: 260px; overflow: auto; }
+.context-file-row { display: flex; align-items: center; gap: 4px; border: 1px solid transparent; border-radius: 5px; margin: 2px 0; }
+.context-selected { background: #eef3ff; border-color: #e5ebfd; }
+.context-file-name { display: flex; align-items: center; gap: 8px; min-width: 0; width: 100%; text-align: left; padding: 8px; color: #8095ab; }
+.context-file-name span { font: 10px var(--mono); color: #667c94; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.context-selected .context-file-name, .context-selected .context-file-name span { color: #3d63dc; }
+.context-pin { display: grid; place-items: center; padding: 7px; color: #a6b4c5; }
+.context-pin:hover, .context-pinned { color: #315df4; }
+.context-pinned { background: #e5edff; border-radius: 4px; }
+.context-files-bottom { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 12px -1px -2px; padding-top: 12px; border-top: 1px solid #ecf0f5; font-size: 9px; color: #8b9db0; }
+.context-files-bottom span, .context-files-bottom button { display: inline-flex; align-items: center; gap: 5px; }
+.context-files-bottom button { font-size: 9px; color: #6e85a0; padding: 3px 0; }
+.context-results { min-width: 0; }
+.context-metrics { display: grid; grid-template-columns: 1fr 25px 1fr 1fr; background: #fff; border: 1px solid var(--context-border); border-radius: 9px; overflow: hidden; min-height: 133px; }
+.context-metric { padding: 20px 24px 16px; }
+.context-metric > span { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #6b8199; }
+.context-metric > strong { display: flex; align-items: baseline; flex-wrap: wrap; gap: 7px; font: 600 32px var(--mono); margin-top: 11px; letter-spacing: -1.5px; }
+.context-metric strong small { color: #92a2b2; font: 10px var(--mono); letter-spacing: 0; }
+.context-metric > p { margin: 8px 0 0; color: #9aa9b8; font-size: 9px; }
+.context-metric-arrow { display: grid; place-items: center; color: #a8b8c9; }
+.context-savings { background: #edf7f2; border-left: 1px solid #e0eee6; }
+.context-savings > span { color: #4e947c; }
+.context-savings > strong { color: #2c8a6c; }
+.context-savings > p { color: #7ca18f; }
+.context-baseline { margin: 11px 0 21px; color: #8a9aab; font-size: 10px; line-height: 1.7; }
+.context-alert { display: flex; align-items: flex-start; gap: 10px; padding: 15px; border: 1px solid #eddbc0; background: #fff9ef; border-radius: 7px; color: #916834; font-size: 12px; margin-bottom: 16px; }
+.context-alert > svg { margin-top: 1px; }
+.context-alert strong { font-weight: 600; }
+.context-alert p { font-size: 11px; line-height: 1.8; margin: 6px 0 0; overflow-wrap: anywhere; }
+.context-alert > button { margin-left: auto; }
+.context-output-panel { background: #fff; border: 1px solid var(--context-border); border-radius: 9px; overflow: hidden; }
+.context-output-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 19px 22px 18px; }
+.context-section-overline { font: 8px var(--mono); color: #93a4b8; letter-spacing: 1.3px; }
+.context-output-heading h2 { display: flex; align-items: center; gap: 9px; margin: 7px 0 0; font-size: 14px; font-weight: 600; }
+.context-status { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; color: #6a9a87; }
+.context-status > span { width: 5px; height: 5px; background: #5ca386; border-radius: 50%; }
+.context-status-busy { color: #6f89b2; }
+.context-tabs { display: flex; gap: 23px; padding: 0 22px; border-bottom: 1px solid #e3eaf2; }
+.context-tabs > button { display: inline-flex; align-items: center; gap: 7px; border-bottom: 2px solid transparent; padding: 11px 0 12px; color: #8a9bb0; font-size: 11px; }
+.context-tabs > button.context-tab-active { border-bottom-color: #315df4; color: #315df4; }
+.context-tabs > button > span { font-size: 9px; padding: 1px 5px; background: #eef3f9; border-radius: 3px; }
+.context-output-body { min-height: 360px; }
+.context-empty { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; min-height: 360px; padding: 30px; text-align: center; color: #8ea3bb; }
+.context-empty strong { color: #69829f; font-size: 13px; font-weight: 500; }
+.context-empty p { margin: 0; font-size: 11px; line-height: 1.9; }
+.context-chunks { display: grid; grid-template-columns: 180px minmax(0, 1fr); min-height: 360px; }
+.context-chunk-list { max-height: 402px; overflow: auto; background: #fafcfe; padding: 10px; border-right: 1px solid #e3eaf2; }
+.context-chunk-item { display: block; width: 100%; text-align: left; padding: 11px 9px; border: 1px solid transparent; border-radius: 5px; color: #8c9fb3; margin-bottom: 3px; }
+.context-chunk-item > span { display: flex; align-items: center; gap: 7px; }
+.context-chunk-item strong { color: #627d9a; font: 10px var(--mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.context-chunk-item > span > svg:last-child { margin-left: auto; }
+.context-chunk-item small { display: block; font: 8px var(--mono); padding-left: 21px; margin-top: 7px; color: #8f9fb2; }
+.context-chunk-item em { display: inline-block; margin: 8px 0 0 21px; color: #8c9fb3; font-style: normal; font-size: 8px; }
+.context-chunk-active { background: #edf3ff; border-color: #e0eaff; }
+.context-chunk-active strong, .context-chunk-active > span { color: #4168d9; }
+.context-chunk-active em { color: #5a7bd1; }
+.context-chunk-detail { min-width: 0; display: flex; flex-direction: column; }
+.context-code-path { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 13px 18px; border-bottom: 1px solid #edf1f6; font: 10px var(--mono); color: #6f87a2; overflow-wrap: anywhere; }
+.context-code-path small { font: 9px var(--mono); color: #9babbd; white-space: nowrap; }
+.context-reasons { display: flex; gap: 7px; flex-wrap: wrap; padding: 11px 17px; }
+.context-reasons > span { display: flex; align-items: center; gap: 4px; background: #f0f6f4; color: #6d9285; padding: 4px 6px; border-radius: 3px; font-size: 9px; overflow-wrap: anywhere; }
+.context-code-lines { padding: 8px 0 19px; overflow: auto; max-height: 320px; min-height: 240px; background: #fff; }
+.context-code-lines > div { display: flex; min-width: max-content; font: 10px/1.95 var(--mono); }
+.context-code-lines > div > span { display: inline-block; width: 48px; flex: 0 0 48px; text-align: right; padding-right: 17px; color: #b6c3d1; user-select: none; }
+.context-code-lines code { color: #46627f; white-space: pre; padding-right: 25px; font: inherit; }
+.context-omissions { padding: 9px 22px 20px; max-height: 402px; overflow: auto; }
+.context-omissions > p { color: #8b9cb0; font-size: 10px; line-height: 1.8; margin-bottom: 17px; }
+.context-omissions > div:not(.context-empty) { display: flex; align-items: flex-start; gap: 11px; padding: 13px 0; border-bottom: 1px solid #edf1f6; color: #93a5ba; }
+.context-omissions strong { display: block; color: #65809c; font: 11px var(--mono); overflow-wrap: anywhere; }
+.context-omissions small { display: block; color: #8b9db0; font-size: 10px; margin-top: 6px; line-height: 1.7; }
+.context-prompt { margin: 0; padding: 20px 22px; overflow: auto; min-height: 360px; max-height: 402px; color: #56718e; font: 10px/1.9 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+.context-output-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid #e4ebf3; padding: 12px 19px; background: #fcfdff; }
+.context-output-footer > span { display: inline-flex; align-items: center; gap: 6px; color: #8b9db0; font-size: 9px; }
+.context-output-footer .context-button { min-height: 31px; padding: 7px 10px; font-size: 10px; }
+.context-warnings { padding: 11px 14px; background: #f0f4f9; border: 1px solid #e0e7f0; border-radius: 6px; margin-top: 13px; font-size: 10px; color: #7e8fa4; }
+.context-warnings summary { cursor: pointer; display: flex; gap: 7px; align-items: center; }
+.context-warnings ul { padding-left: 19px; margin: 10px 0 0; }
+.context-warnings li { line-height: 1.8; margin: 6px 0; overflow-wrap: anywhere; }
+.context-export-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin: 14px 0 19px; }
+.context-export-row > p { font-size: 10px; color: #9aa8b9; line-height: 1.8; margin: 0; }
+.context-export-row > div { display: flex; gap: 15px; flex-shrink: 0; }
+.context-export-row button { display: inline-flex; gap: 5px; align-items: center; padding: 5px 0; color: #7289a2; font-size: 10px; }
+.context-source-editor { border: 1px solid var(--context-border); border-radius: 7px; background: white; overflow: hidden; }
+.context-source-editor > summary { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 16px 18px; color: #8b9eb4; }
+.context-source-editor > summary strong { font-size: 11px; color: #637d99; font-weight: 500; }
+.context-source-editor > summary span { margin-left: 12px; font: 9px var(--mono); color: #96a6b9; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.context-source-editor > summary svg:last-child { margin-left: auto; }
+.context-source-editor[open] > summary svg:last-child { transform: rotate(90deg); }
+.context-source-toolbar { display: flex; align-items: center; gap: 10px; padding: 11px 18px; border-top: 1px solid #e5ecf4; background: #f9fbfe; color: #7e93aa; font-size: 10px; }
+.context-source-toolbar select { min-width: 0; max-width: 55%; border: 1px solid #dce5f0; border-radius: 4px; padding: 5px; color: #6883a0; font: 10px var(--mono); background: #fff; }
+.context-source-toolbar > span { margin-left: auto; font-size: 9px; }
+.context-source-editor textarea { width: 100%; min-height: 300px; resize: vertical; border: 0; padding: 18px; background: #fff; color: #56718e; font: 11px/1.8 var(--mono); white-space: pre; overflow: auto; display: block; }
+.context-edit-error { margin: 0; padding: 12px 18px; background: #fff4ed; color: #a17248; font-size: 11px; }
+.context-page-footer { display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid #e3eaf2; margin-top: 28px; padding: 18px 0 22px; font-size: 9px; color: #9aabbc; }
+.context-return { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 11px 28px; background: #eff4fc; color: #6381a0; border-bottom: 1px solid #dbe5f1; font-size: 11px; }
+.context-return button { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; color: #315df4; }
+.context-loading { padding: 40px; color: #6885a2; }
+.context-spin { animation: context-spin 1.4s linear infinite; }
+@keyframes context-spin { to { transform: rotate(360deg); } }
+@media (min-width: 1500px) { .context-main { padding-top: 39px; } .context-grid { grid-template-columns: 340px minmax(0, 1fr); gap: 28px; } .context-code-lines > div { font-size: 11px; } .context-chunks { grid-template-columns: 210px minmax(0, 1fr); } }
+@media (max-width: 1120px) { .context-topbar { padding-inline: 24px; gap: 25px; } .context-main { padding-inline: 24px; } .context-grid { grid-template-columns: 290px minmax(0, 1fr); gap: 18px; } .context-panel { padding: 16px; } .context-local { display: none; } .context-metric { padding: 19px 15px 16px; } .context-metric > strong { font-size: 27px; } .context-chunks { grid-template-columns: 155px minmax(0, 1fr); } .context-export-row { align-items: flex-start; flex-direction: column; gap: 7px; } }
+@media (max-width: 820px) { .context-topbar { padding-inline: 18px; min-height: 66px; gap: 17px; } .context-brand strong { font-size: 18px; } .context-brand > small { display: none; } .context-topnav { gap: 14px; font-size: 10px; } .context-topnav > button { font-size: 10px; } .context-github { gap: 5px; } .context-mit { display: none; } .context-main { padding: 26px 18px 0; } .context-grid { grid-template-columns: 245px minmax(0, 1fr); gap: 14px; } .context-metrics { grid-template-columns: 1fr 1fr; } .context-metric-arrow { display: none; } .context-savings { grid-column: span 2; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 15px; border-left: 0; border-top: 1px solid #e0eee6; } .context-savings > strong { margin-top: 0; font-size: 23px; } .context-savings > p { display: none; } .context-chunks { grid-template-columns: 1fr; } .context-chunk-list { display: flex; gap: 5px; padding: 8px; max-height: 103px; border-right: 0; border-bottom: 1px solid #e3eaf2; } .context-chunk-item { min-width: 160px; margin: 0; padding: 7px; } .context-chunk-item em { margin-top: 5px; } .context-tabs { gap: 17px; padding-inline: 15px; } .context-tabs > button { font-size: 10px; } .context-output-heading { padding: 16px; } .context-output-heading h2 { font-size: 12px; } .context-output-heading h2 .context-count { display: none; } .context-source-editor > summary span { display: none; } .context-files-bottom { flex-wrap: wrap; } .context-alert { flex-wrap: wrap; } }
+@media (max-width: 620px) { .context-topbar { flex-wrap: wrap; gap: 0; padding-top: 13px; } .context-brand { gap: 8px; } .context-brand-mark { width: 31px; height: 31px; border-radius: 7px; } .context-github { order: 1; } .context-topnav { order: 2; width: 100%; margin-top: 11px; min-height: 38px; gap: 23px; } .context-heading { margin-bottom: 20px; } .context-heading h1 { font-size: 24px; } .context-heading p { font-size: 11px; } .context-mobile-break { display: block; } .context-grid { grid-template-columns: 1fr; gap: 20px; } .context-controls { grid-template-columns: 1fr; gap: 12px; } .context-task-input { height: 110px; } .context-panel-label { margin-bottom: 14px; } .context-file-list { max-height: 160px; } .context-metrics { grid-template-columns: 1fr 20px 1fr; } .context-metric-arrow { display: grid; } .context-savings { grid-column: span 3; } .context-savings > p { display: block; margin-top: 0; } .context-metric > strong { font-size: 30px; } .context-savings > strong { font-size: 25px; } .context-baseline { margin-bottom: 15px; } .context-output-heading h2 { font-size: 13px; } .context-output-heading h2 .context-count { display: inline; } .context-chunks { grid-template-columns: 1fr; } .context-code-lines > div { font-size: 10px; } .context-export-row { gap: 10px; } .context-source-toolbar > span { display: none; } .context-source-toolbar select { max-width: 80%; } .context-page-footer { flex-direction: column; gap: 8px; font-size: 9px; } .context-return > span { display: none; } }
+@media (prefers-reduced-motion: reduce) { .context-spin { animation: none; } }

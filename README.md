@@ -1,29 +1,29 @@
-# DiffAtlas
+# DiffAtlas Context
 
-**AI code reviews you can trace back to the diff.**
+**Give your AI the code it needs, within a token budget.**
 
-DiffAtlas turns a Git diff into a focused review with file locations, quoted evidence, suggested fixes, and a test plan. It checks findings against the supplied diff before displaying them, so a reviewer can inspect the exact changed code behind each finding.
+DiffAtlas v0.2 packs repository context for a coding task without calling a model. It ranks code against your task, preserves complete JavaScript/TypeScript declarations and selected dependencies, and produces a prompt within your token budget. Use it with your local AI, an editor assistant, or a hosted model.
 
-An open-source developer tool built with TypeScript, React, Express, and the OpenAI API. Licensed under MIT.
+The browser app and CLI perform real context selection locally. No API key is required. Token reduction is measured against the same task and formatting applied to all accepted input files; smaller input alone does not prove better answers.
 
-[中文上手指南](docs/quickstart.zh-CN.md) · [Deployment](docs/deployment.md) · [Contributing](CONTRIBUTING.md) · [Open-source program notes](docs/open-source-program.zh-CN.md)
+[Browser app](https://picpk.github.io/diffatlas/) · [中文上手](docs/quickstart.zh-CN.md) · [Selection method](docs/context-packing.md) · [Benchmark](docs/context-benchmark.md) · [Deployment](docs/deployment.md)
 
-[Try the live rule-based demo](https://picpk.github.io/diffatlas/) · [CI](https://github.com/picpk/diffatlas/actions/workflows/ci.yml)
+## Why use this with a local AI?
 
-## What it does
+You already have the model. DiffAtlas helps prepare its input when a repository is too large to paste in full, or when you want to inspect exactly what context you send.
 
-- Review a pasted or uploaded Git diff in a browser, or run a review from the CLI.
-- Try a rule-based demo without an account, API key, or model request.
-- Use the OpenAI API through a server-side integration for AI reviews.
-- Check each finding's file, new line number, and exact quoted evidence against an added line in the diff; unsupported findings are discarded.
-- Export Markdown from the browser; use the CLI for Markdown, JSON, or SARIF reports.
-- Run locally, serve the demo on GitHub Pages, or deploy the full app with Docker.
+- Set a task and budget; inspect selected code, omissions, and selection reasons.
+- Preserve complete JS/TS top-level statements instead of cutting a function halfway through.
+- Prioritize changed statements from a Git diff and pin files that must be included.
+- Include relevant same-file declarations and one-hop relative imports where resolvable.
+- Count the final prompt with `o200k_base` or `cl100k_base`, including task and formatting.
+- Copy or export the prompt and compare it with the same-format full-input baseline.
 
-Evidence checks establish that a finding refers to supplied code. They do not establish that the finding is correct. DiffAtlas sees the diff you provide, so unchanged code, callers, configuration, and runtime behavior may require a human review. Patches containing only deletions require manual review; the AI path returns a notice without making a model request.
+Selection is deterministic and lexical. It does not know every dependency or which code a model will need. Inspect omissions and pin important files. The selected encoding's BPE count is not a universal token count for all local models.
 
-## Quick start
+## Run locally
 
-Requires **Node.js 22.12+** and npm.
+Requires Git and **Node.js 22.12+**.
 
 ```bash
 git clone https://github.com/picpk/diffatlas.git
@@ -32,75 +32,66 @@ npm ci
 npm run dev
 ```
 
-Open the local URL printed by Vite. The development server forwards `/api` requests to `127.0.0.1:8787`. Try the sample diff in demo mode first; no API key is needed.
+Open the Vite URL, select source files, describe the task, and choose a budget. Generate context, inspect it, then copy or download it for your AI tool. Packing does not need `.env` or model credentials.
 
-For AI reviews, copy `.env.example` to `.env` and set:
+## CLI workflow
 
-```dotenv
-OPENAI_API_KEY=your-own-api-key
-OPENAI_MODEL=gpt-4.1-mini
-REVIEW_ACCESS_TOKEN=your-own-long-random-token
-```
-
-Restart the server after changing `.env`. Enter the access token in the app when requested. API usage is billed to the key's account; a ChatGPT subscription does not itself supply API credits. Keep the key on the server and never put it in a `VITE_*` variable.
-
-## CLI
-
-Review the included example without a model request:
+From the DiffAtlas directory:
 
 ```bash
-npm run review -- --demo --file examples/sample.diff --format markdown --output report.md
+npm run pack -- --repo /path/to/your/repository --task "Check getCachedUser when a cached result is null" --budget 4000 --format prompt --output context.md
 ```
 
-Review your own changes with the OpenAI API:
+Open `context.md`, inspect the selected code, and paste it into your local AI. Use `--format json` for the prompt, token counts, reasons, omissions, and warnings in a machine-readable report. To try this repository:
+
+```bash
+npm run pack -- --repo src/context --task "Review countTextTokens encoding validation" --budget 4000 --format prompt --output context.md
+```
+
+Add a diff or pin files:
 
 ```bash
 git diff --output=changes.diff
-npm run review -- --file changes.diff --format json --output review.json
+npm run pack -- --repo . --task "Review these changes and their callers" --diff changes.diff --pin src/context/types.ts --budget 6000 --encoding o200k_base --format json --output context-report.json
 ```
 
-Choose `markdown`, `json`, or `sarif` with `--format`. Omit `--output` to write the report to standard output. When piping the report to another tool, use `npm run --silent review` or invoke the bundled CLI directly to avoid npm's lifecycle log prefix. Use `--fail-on high`, `medium`, or `low` to return exit code `2` when a finding meets that severity threshold; the default is `none`. Input or provider errors return `1`. The CLI runs locally and reads `OPENAI_API_KEY`; the web server's access token is for HTTP requests.
+`--pin` can be repeated or use comma-separated paths relative to `--repo`. Pinned files and changed statements are required; if they cannot fit, the tool returns a budget failure and the required minimum, without a truncated prompt.
 
-After a production build, the CLI also runs without development dependencies:
+The CLI uses Git's tracked and untracked file listing while respecting `.gitignore`. It excludes recognized secret filenames and reports exclusions. It does **not** detect every inline secret. Inspect exported source before sharing or committing it. When piping output, use `npm run --silent pack` to suppress npm's lifecycle prefix.
 
-```bash
-npm run build
-node --env-file-if-exists=.env dist-server/cli.js --demo --file examples/sample.diff --format sarif --output review.sarif
-```
+The current input limit is 100 eligible files, 100 KiB per file, and 1 MiB total. For a larger repository, point `--repo` at a relevant Git subdirectory. Exit codes are `0` for a produced prompt, `1` for an input/read error, and `2` when required context exceeds the budget.
 
-## Build and deploy
+## Check the measurements
 
 ```bash
+npm run benchmark -- --format markdown --output benchmark.md
+npm run benchmark -- --encoding cl100k_base --output benchmark.json
 npm run check
-npm run build
-npm start
 ```
 
-The production app serves the browser UI and API together at `http://127.0.0.1:8787`. `npm run check` already runs type checks, tests, and a production build; the separate build command is useful when skipping the full check locally.
+Eight authored synthetic repositories are evaluated at 128, 256, 512, 1,024, and 2,048 tokens. Results include token reduction, budget failures, and retention of annotated code evidence. Missing evidence and failed runs remain visible. This is a small selection regression suite; it makes no model calls and is not independent model-quality validation. See [the method and limitations](docs/context-benchmark.md).
 
-- **GitHub Pages:** the included workflow publishes a static, rule-based demo. Pages cannot run the AI backend. Select **GitHub Actions** as the Pages source in repository settings.
-- **Docker:** build and run the full app with server-side environment variables.
-- **Render:** `render.yaml` describes an optional demo service. Add your API credentials and access token in the host's private environment settings to enable AI reviews.
+## Existing diff review tools
 
-See [the deployment guide](docs/deployment.md) for exact commands, environment variables, and public-host configuration.
+The earlier review CLI and server API remain available. The rule-based mode runs locally:
 
-## Privacy and security
+```bash
+npm run review -- --demo --file examples/sample.diff --format markdown --output review.md
+```
 
-Demo mode makes no model request. An AI review sends the supplied diff to OpenAI through the configured server. Review the diff for secrets and private data before using AI mode. The tool does not execute your patch or apply changes to your repository.
-
-If you expose an AI-enabled server publicly, set `REVIEW_ACCESS_TOKEN` and give it only to intended users. Hosting is under your control: deploy behind HTTPS and use your provider's request and spending controls. See [SECURITY.md](SECURITY.md) for reporting and operational details.
+For an OpenAI review, copy `.env.example` to `.env`, set `OPENAI_API_KEY`, and omit `--demo`. The CLI supports Markdown, JSON, and SARIF; the HTTP API additionally requires `REVIEW_ACCESS_TOKEN`. Evidence validation checks a finding's reference to supplied code, not whether the finding is correct. AI review sends the provided diff to OpenAI and is separate from local context packing. See [deployment](docs/deployment.md).
 
 ## 中文简介
 
-DiffAtlas 是一个开源的 Git diff 审查工具：粘贴或上传代码变更，获得带文件位置、代码证据、修改建议和测试计划的审查结果。它会校验问题是否对应输入 diff 中的代码，但仍需要人工判断问题是否成立。
+DiffAtlas Context 是本地代码上下文打包工具：给出任务、代码文件和 token 预算，生成可直接交给本地 AI 或其他模型的上下文。它保留完整代码单元，按任务和 Git 变更选择内容，展示所选编码的精确计数、省量及被省略的代码。
 
-无需 API Key 即可体验规则演示；真实 AI 审查通过服务端调用 OpenAI。网页支持 Markdown 导出，CLI 支持 Markdown / JSON / SARIF。提供 GitHub Pages 静态演示和 Docker 完整部署。详细步骤见[中文上手指南](docs/quickstart.zh-CN.md)。
+它不调用模型，也不声称让模型变聪明。价值是控制输入大小，并检查为了省 token 舍弃了什么。详见[中文上手指南](docs/quickstart.zh-CN.md)。
 
-## Project status
+## Contribute
 
-This is an early project. Contributions, reproducible bug reports, and feedback from real code reviews are welcome. See the [roadmap](docs/roadmap.md) and [contribution guide](CONTRIBUTING.md).
+Useful contributions include reproducible selection failures, compact fixtures with justified evidence annotations, and real task comparisons that report both quality and token usage. See [CONTRIBUTING.md](CONTRIBUTING.md), [the roadmap](docs/roadmap.md), and [SECURITY.md](SECURITY.md).
 
-DiffAtlas is independently maintained and is not endorsed by OpenAI. An application to an open-source support program is separate from releasing this project; no approval or funding is claimed. [Official program requirements and preparation notes](docs/open-source-program.zh-CN.md) are included for maintainers.
+DiffAtlas is independently maintained and is not endorsed by OpenAI. No support-program approval or funding is claimed.
 
 ## License
 

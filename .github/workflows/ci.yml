@@ -32,3 +32,11 @@ jobs:
       - run: npm run check
       - name: Verify bundled CLI in demo mode
         run: node dist-server/cli.js --demo --file examples/sample.diff --format json --output demo-review.json
+      - name: Verify local context packing without an API key
+        run: node dist-server/context-cli.js --repo src/core --task "Explain parseDiff line coordinate validation" --budget 2500 --format json --output context-report.json
+      - name: Run synthetic evidence-retention benchmark
+        run: npm run --silent benchmark -- --output benchmark-results.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: context-benchmark-${{ matrix.os }}
+          path: benchmark-results.json

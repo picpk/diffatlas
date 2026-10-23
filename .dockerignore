@@ -12,5 +12,7 @@ coverage
 *.sarif
 report.md
 review.json
+context-report.json
+benchmark-results.json
 demo-review.json
 docs

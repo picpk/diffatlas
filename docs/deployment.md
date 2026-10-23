@@ -1,91 +1,93 @@
 # Deployment guide / 部署指南
 
-DiffAtlas has two deployment modes. GitHub Pages hosts the static rule-based demo. A Node.js or Docker deployment serves the UI and API together and can perform AI reviews with server-side credentials.
+DiffAtlas Context runs in the browser or CLI without a model backend. A static deployment provides the working context packer, token counting, and exports. The existing diff-review API is optional and needs a Node.js service only when you use that workflow.
 
-## Environment variables
-
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `OPENAI_API_KEY` | Unset | Server-side key for AI reviews. Without a key, use demo mode. |
-| `OPENAI_MODEL` | `gpt-4.1-mini` | Model used by AI reviews; must be available to your API account. |
-| `REVIEW_ACCESS_TOKEN` | Unset | Shared bearer token required for AI HTTP requests, including local use. The web backend enables AI only when both this token and the API key are set. |
-| `HOST` | `127.0.0.1` | Listener address. Use `0.0.0.0` inside a container or on a managed host. |
-| `PORT` | `8787` | Backend and production UI port. |
-| `BASE_PATH` | `/` | Build-time Vite asset base for a site hosted under a path, such as `/diffatlas/`. |
-
-Never put secrets in `VITE_*` variables. Vite bundles those into public browser assets. `BASE_PATH` is a public build setting, not a secret.
-
-## Local production service
+## Local development and CLI
 
 ```bash
 npm ci
+npm run dev
+```
+
+Open the Vite URL. Packing does not require `.env`. Without starting a server:
+
+```bash
+npm run pack -- --repo src/context --task "Review countTextTokens encoding validation" --budget 4000 --format prompt --output context.md
+```
+
+The CLI reads locally; the browser processes selected files. Neither packing mode calls a model.
+
+## GitHub Pages
+
+1. Select **Settings → Pages → Build and deployment → GitHub Actions**.
+2. Push to `main` or run the included Pages workflow manually.
+3. Wait for the deployment job and open its reported URL.
+
+The workflow reads the site base path from `actions/configure-pages`, builds with `npm run build:web`, and publishes `dist/`. The project URL is [https://picpk.github.io/diffatlas/](https://picpk.github.io/diffatlas/).
+
+Static hosting supports the full context workflow. Pages cannot run the legacy Express review API. An API key in a build variable does not create a backend and can expose the key.
+
+For another static host, publish `dist/` after `npm run build:web`. Set `BASE_PATH` at build time for a subpath. Keep all generated assets together so the tokenizer and application can load.
+
+## Production Node.js service
+
+```bash
 npm run check
 npm start
 ```
 
-`npm run check` includes a production build. For subsequent builds without tests, use `npm run build`. The app serves static assets from `dist/` and runs the bundled server at `dist-server/index.js`.
+`check` includes tests, type checks, and a production build. The service serves `dist/` and the existing API at `http://127.0.0.1:8787`. Use `npm run build` for subsequent builds without the full checks.
 
-The default listener is local-only. Change `HOST` deliberately when deploying to a server. Terminate HTTPS at the host's reverse proxy and configure credentials in its secret environment settings.
-
-## GitHub Pages: static demo
-
-1. Publish the repository on GitHub with the included Pages workflow and lockfile.
-2. Open **Settings → Pages → Build and deployment** and select **GitHub Actions**.
-3. Push to `main`, or run **Actions → Deploy demo to GitHub Pages → Run workflow**.
-4. Open the deployment URL shown by the workflow or the Pages settings page.
-
-The workflow asks `actions/configure-pages` for the site's base path and builds with `npm run build:web`. This supports project sites hosted at `/repository-name/` as well as root sites. Enable Pages in settings before running the workflow.
-
-For `picpk/diffatlas`, the usual project-site address is `https://picpk.github.io/diffatlas/` once Pages has been enabled and deployment succeeds. This is an expected address, not a claim that a deployment is already active.
-
-The static app provides the rule-based demo and report exports. It cannot read `.env`, store a server key, or run Express. Do not add an API key as a GitHub Actions build variable to try to enable AI mode.
-
-## Docker: complete app
-
-From the repository root:
+## Docker
 
 ```bash
 docker build -t diffatlas:local .
 docker run --rm -p 127.0.0.1:8787:8787 diffatlas:local
 ```
 
-This starts a local demo. For AI reviews, configure `.env` with your API key and a long random access token, then run:
+This serves the context app without model credentials. The image runs as a non-root user; `.env` is excluded from the build context. To enable the optional legacy AI review API with runtime credentials:
 
 ```bash
 docker run --rm --env-file .env -e HOST=0.0.0.0 -e PORT=8787 -p 127.0.0.1:8787:8787 diffatlas:local
 ```
 
-The explicit `HOST` override matters because the example `.env` uses `127.0.0.1`, which is only the container's own loopback. This command still publishes the service only on the host's loopback. Use a reverse proxy or your hosting platform to expose it over HTTPS.
+The explicit host override exposes the service inside the container while the published port remains local to the host. Use your host's HTTPS reverse proxy for public access.
 
-The image builds with development dependencies in a build stage, then installs only production dependencies in the runtime stage and runs as the non-root `node` user. `.env` is excluded from the Docker build context.
+## Optional legacy review configuration
 
-The image also includes the CLI and sample diff:
+Context packing does not require these credentials.
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `OPENAI_API_KEY` | Unset | Server-side OpenAI key for diff reviews |
+| `OPENAI_MODEL` | `gpt-4.1-mini` | Model used by the review integration |
+| `REVIEW_ACCESS_TOKEN` | Unset | Shared bearer token required by the AI HTTP endpoint |
+| `HOST` | `127.0.0.1` | Server address; use `0.0.0.0` in containers |
+| `PORT` | `8787` | Server port |
+| `BASE_PATH` | `/` | Public build-time asset path |
+
+Copy `.env.example` to `.env` only if needed. Never put secrets in `VITE_*` variables, which become browser assets. Changes to server configuration require a restart.
+
+The existing review CLI does not need the HTTP access token:
 
 ```bash
-docker run --rm diffatlas:local node dist-server/cli.js --demo --file examples/sample.diff --format markdown
+npm run review -- --demo --file examples/sample.diff --format markdown --output review.md
+# Set OPENAI_API_KEY and omit --demo to call OpenAI.
 ```
 
-To run AI CLI reviews, pass your key through a private environment file. The CLI does not need `REVIEW_ACCESS_TOKEN` because it calls the provider directly.
+After a production build, the bundled review CLI is available:
 
-## Render: optional hosted demo
+```bash
+node --env-file-if-exists=.env dist-server/cli.js --demo --file examples/sample.diff --format json
+```
 
-The included `render.yaml` is a Blueprint for one Docker web service. It requests Render's `free` plan and starts in demo mode with no API key. Free-plan availability, sleeping behavior, build limits, and any future pricing changes are controlled by Render; inspect the selected plan before creating the service.
+The included Render Blueprint remains an optional Docker service. Inspect Render's current plan and pricing before creating it. `/api/status` verifies the process, not model access. Add credentials only through the host's private environment settings.
 
-1. Connect your GitHub repository in Render and choose **New → Blueprint**.
-2. Review the `diffatlas-demo` service, selected plan, and repository before applying it.
-3. Wait for the build and use the service's HTTPS URL.
+## Verify deployment
 
-The Blueprint sets `HOST=0.0.0.0` and `PORT=10000`; the service checks `/api/status`. No OpenAI credential is embedded or required for this demo.
+- Load the app, select files, provide a task and budget, and generate context.
+- Inspect and download the prompt; check the budget and selected encoding.
+- Try a budget below required content and verify the failure is shown without a truncated success prompt.
+- If using the legacy API, test `/api/status` and review authentication separately.
 
-To enable live AI reviews, open the Render service's **Environment** settings and privately add `OPENAI_API_KEY` plus a long random `REVIEW_ACCESS_TOKEN`, then redeploy. Share the access token only with intended users. Keep API spending limits configured in your OpenAI account. The server's health endpoint only confirms the process is running; a successful live request is needed to verify provider access.
-
-Do not add literal secrets to `render.yaml`. If you customize the Blueprint to prompt for credentials, Render's `sync: false` environment entries request values during setup; those values belong in Render, never in Git.
-
-## Verification after deployment
-
-- Load the UI and complete a demo review; export a report and inspect its content.
-- Check `GET /api/status` on a full backend deployment.
-- For AI mode, verify that requests without the correct access token are rejected, then submit a small non-sensitive diff with the correct token.
-- Confirm that generated browser assets, public logs, and exported reports do not contain your API key or access token.
-
-Server configuration changes require a restart or redeploy. Updating GitHub Pages affects the static demo only.
+Exports contain user source. Filename filtering does not detect every inline secret. See [SECURITY.md](../SECURITY.md) for vulnerability reporting.

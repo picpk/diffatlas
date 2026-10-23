@@ -1,8 +1,8 @@
 {
   "name": "diffatlas",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Evidence-checked AI code reviews for Git diffs.",
+  "description": "Local token-budgeted code context for AI coding tasks, with auditable source selection.",
   "type": "module",
   "license": "MIT",
   "engines": {
@@ -14,6 +14,8 @@
     "build:web": "vite build",
     "start": "node --env-file-if-exists=.env dist-server/index.js",
     "review": "tsx --env-file-if-exists=.env cli.ts",
+    "pack": "tsx context-cli.ts",
+    "benchmark": "tsx benchmarks/run.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "check": "npm run typecheck && npm test && npm run build"
@@ -22,11 +24,13 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-rate-limit": "^8.2.1",
+    "gpt-tokenizer": "^4.1.0",
     "helmet": "^8.1.0",
     "lucide-react": "^0.468.0",
     "openai": "^6.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "typescript": "^5.9.3",
     "zod": "^4.1.12"
   },
   "devDependencies": {
@@ -40,7 +44,6 @@
     "esbuild": "^0.28.1",
     "supertest": "^7.1.4",
     "tsx": "^4.20.6",
-    "typescript": "^5.9.3",
     "vite": "^7.1.12",
     "vitest": "^5.0.5"
   }

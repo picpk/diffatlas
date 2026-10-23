@@ -9,3 +9,5 @@ coverage/
 .DS_Store
 .local/
 *.tsbuildinfo
+context-report.json
+benchmark-results.json
