@@ -1,0 +1,20 @@
+# Optional demo deployment. No API credential is required or included.
+# Verify current plan availability and pricing in Render before creating it.
+services:
+  - type: web
+    name: diffatlas-demo
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/status
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: '10000'
+      - key: OPENAI_MODEL
+        value: gpt-4.1-mini
+    # To enable AI reviews, add OPENAI_API_KEY and REVIEW_ACCESS_TOKEN in
+    # Render's private Environment settings, then redeploy. Never commit keys.

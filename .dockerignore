@@ -1,0 +1,16 @@
+.git
+.github
+.local
+node_modules
+dist
+dist-server
+coverage
+.env
+.env.*
+!.env.example
+*.log
+*.sarif
+report.md
+review.json
+demo-review.json
+docs

@@ -1,0 +1,28 @@
+diff --git a/src/api/users.ts b/src/api/users.ts
+index 43dd10a..92e7b21 100644
+--- a/src/api/users.ts
++++ b/src/api/users.ts
+@@ -1,3 +1,4 @@
+ export async function findUser(db, request) {
+-  return db.query('SELECT * FROM users WHERE id = ?', [request.params.id]);
++  const id = request.params.id;
++  return db.query("SELECT * FROM users WHERE id = " + id);
+ }
+diff --git a/src/ui/profile.ts b/src/ui/profile.ts
+index 18d492a..ba17f01 100644
+--- a/src/ui/profile.ts
++++ b/src/ui/profile.ts
+@@ -1,3 +1,3 @@
+ export function renderBio(element, profile) {
+-  element.textContent = profile.bio;
++  element.innerHTML = profile.bio;
+ }
+diff --git a/src/config/client.ts b/src/config/client.ts
+index c36a1e8..d918f20 100644
+--- a/src/config/client.ts
++++ b/src/config/client.ts
+@@ -1,3 +1,3 @@
+ export const clientConfig = {
+-  apiKey: process.env.SERVICE_API_KEY,
++  apiKey: "demo-placeholder-not-a-real-key",
+ };
