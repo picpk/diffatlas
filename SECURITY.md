@@ -6,6 +6,8 @@ The Context workspace and `pack` CLI select and tokenize source locally without 
 
 Only relative paths are accepted by the browser packer. The CLI reads regular files within the chosen repository directory, with per-file and aggregate size bounds. It never executes repository code. Text inside code is untrusted input; context selection cannot eliminate prompt injection or guarantee model behavior.
 
+The Agent CLI and installed skill write selected source to a fresh local artifact directory and return only a compact status summary. Their `report.json` excludes the full baseline and duplicate chunk content. These files persist for the Agent to read; the user can remove them when no longer needed. The installer refuses existing skill destinations so local modifications are preserved. The standalone bundle includes third-party license notices and needs no network service during use.
+
 DiffAtlas is an early project. Security fixes target the latest code on `main`; no long-term support branches are currently maintained.
 
 ## Report a vulnerability

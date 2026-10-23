@@ -36,6 +36,8 @@ jobs:
         run: node dist-server/context-cli.js --repo src/core --task "Explain parseDiff line coordinate validation" --budget 2500 --format json --output context-report.json
       - name: Run synthetic evidence-retention benchmark
         run: npm run --silent benchmark -- --output benchmark-results.json
+      - name: Verify standalone Agent skill and installation
+        run: npm run verify:skill
       - uses: actions/upload-artifact@v4
         with:
           name: context-benchmark-${{ matrix.os }}

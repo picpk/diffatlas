@@ -1,6 +1,6 @@
 {
   "name": "diffatlas",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Local token-budgeted code context for AI coding tasks, with auditable source selection.",
   "type": "module",
@@ -15,6 +15,10 @@
     "start": "node --env-file-if-exists=.env dist-server/index.js",
     "review": "tsx --env-file-if-exists=.env cli.ts",
     "pack": "tsx context-cli.ts",
+    "pack:agent": "tsx agent-cli.ts",
+    "build:skill": "node scripts/build-skill.mjs",
+    "install:skill": "node scripts/install-skill.mjs",
+    "verify:skill": "node scripts/verify-skill.mjs",
     "benchmark": "tsx benchmarks/run.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

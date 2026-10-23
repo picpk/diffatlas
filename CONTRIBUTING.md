@@ -26,6 +26,8 @@ node dist-server/context-cli.js --repo src/core --task "Explain parseDiff line c
 npm run --silent benchmark -- --output benchmark-results.json
 ```
 
+For the Agent interface, skill, or packaging changes, run `npm run verify:skill`. It builds and installs the standalone runtime into a temporary directory, invokes it without checkout dependencies, and checks that an existing installation is preserved. Validate `skills/diffatlas-context/SKILL.md` with your skill host's validator when available.
+
 For the legacy review CLI:
 
 ```bash

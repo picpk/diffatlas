@@ -178,7 +178,7 @@ export default function ContextWorkspace({ onOpenReview }: { onOpenReview: () =>
 
   return <div className="context-app">
     <header className="context-topbar">
-      <a className="context-brand" href="#"><span className="context-brand-mark"><Layers3 size={22} /></span><strong>DiffAtlas<span>Context</span></strong><small>v0.2</small></a>
+      <a className="context-brand" href="#"><span className="context-brand-mark"><Layers3 size={22} /></span><strong>DiffAtlas<span>Context</span></strong><small>v0.3</small></a>
       <nav className="context-topnav" aria-label="工作台导航"><span className="context-topnav-active">上下文工作台</span><button onClick={onOpenReview}>代码审查 <ArrowRight size={13} /></button></nav>
       <a className="context-github" href="https://github.com/picpk/diffatlas" target="_blank" rel="noreferrer"><Github size={17} /><span>GitHub</span><span className="context-mit">MIT</span></a>
     </header>

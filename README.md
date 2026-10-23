@@ -2,7 +2,7 @@
 
 **Give your AI the code it needs, within a token budget.**
 
-DiffAtlas v0.2 packs repository context for a coding task without calling a model. It ranks code against your task, preserves complete JavaScript/TypeScript declarations and selected dependencies, and produces a prompt within your token budget. Use it with your local AI, an editor assistant, or a hosted model.
+DiffAtlas v0.3 packs repository context for a coding task without calling a model. It ranks code against your task, preserves complete JavaScript/TypeScript declarations and selected dependencies, and produces a prompt within your token budget. Use it with your local AI, an editor assistant, or a hosted model.
 
 The browser app and CLI perform real context selection locally. No API key is required. Token reduction is measured against the same task and formatting applied to all accepted input files; smaller input alone does not prove better answers.
 
@@ -33,6 +33,16 @@ npm run dev
 ```
 
 Open the Vite URL, select source files, describe the task, and choose a budget. Generate context, inspect it, then copy or download it for your AI tool. Packing does not need `.env` or model credentials.
+
+## Install as an Agent skill
+
+```bash
+npm run install:skill
+```
+
+This builds and installs a self-contained skill under `$CODEX_HOME/skills/diffatlas-context` (or `~/.codex/skills/diffatlas-context`). Invoke `$diffatlas-context` in a new Codex session. A custom `--dest` supports other skill directories; existing installations are never overwritten. The installed runtime needs only Node.js 22.12+ and Git, with no npm dependencies or server to start.
+
+Any agent with shell and file tools can call `node <skill-dir>/scripts/pack.mjs --repo <repo> --task "..." --budget 4000`. It returns compact JSON with status and artifact paths. The agent then reads the selected context, without loading the full baseline or duplicated source into its conversation. See [Agent integration / 中文安装与调用](docs/agent-integration.zh-CN.md) for the status contract and portable package.
 
 ## CLI workflow
 

@@ -1,0 +1,6 @@
+interface:
+  display_name: "DiffAtlas Context"
+  short_description: "Pack relevant code into a measured local token budget"
+  default_prompt: "使用 $diffatlas-context 为当前代码任务筛选必要上下文，在预算内保留关键代码，然后继续完成任务。"
+policy:
+  allow_implicit_invocation: true
